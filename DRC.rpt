@@ -1,23 +1,17 @@
 ** Drc report for notastarboy.kicad_pcb **
-** Created on 2026-10-07T18:05:04 **
+** Created on 2026-10-08T12:29:51 **
 ** Report includes: Errors, Warnings **
 
-** Found 26 DRC violations **
+** Found 23 DRC violations **
 [malformed_courtyard]: Footprint has malformed courtyard (not a closed shape)
     Local override; error
     @(94.2760 mm, 65.3250 mm): Footprint J1
 [malformed_courtyard]: Footprint has malformed courtyard (not a closed shape)
     Local override; error
     @(94.2760 mm, 65.3250 mm): Footprint J1
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(125.6150 mm, 92.4199 mm): Track [/GPIO2] on F.Cu, length 1.9199 mm
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(110.3800 mm, 67.3700 mm): Track [GND] on F.Cu, length 0.9051 mm
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(94.9955 mm, 94.6509 mm): Track [GND] on F.Cu, length 11.8964 mm
+[text_thickness]: Text thickness out of range (TrueType font characters with insufficient stroke weight)
+    Rule: board setup constraints silk text thickness; warning
+    @(123.0000 mm, 118.5000 mm): PCB text '© 2011' on F.Silkscreen
 [text_thickness]: Text thickness out of range (TrueType font characters with insufficient stroke weight)
     Rule: board setup constraints silk text thickness; warning
     @(131.5000 mm, 109.5000 mm): PCB text '"Myann vizz gow
@@ -26,24 +20,21 @@ aab khoshik"' on F.Silkscreen
 [text_thickness]: Text thickness out of range (TrueType font characters with insufficient stroke weight)
     Rule: board setup constraints silk text thickness; warning
     @(129.0000 mm, 83.0000 mm): PCB text 'I'M COOLEST OF 'EM ALL!!' on F.Silkscreen
-[text_thickness]: Text thickness out of range (TrueType font characters with insufficient stroke weight)
-    Rule: board setup constraints silk text thickness; warning
-    @(123.0000 mm, 118.5000 mm): PCB text '© 2011' on F.Silkscreen
 [text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6350 mm)
     Rule: board setup constraints silk text height; warning
     @(90.8525 mm, 91.5810 mm): Reference field of U1
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(123.0800 mm, 98.9700 mm): Segment of SW1 on F.Silkscreen
     @(115.9200 mm, 98.6260 mm): Reference field of SW2
-[silk_overlap]: Silkscreen clearance
-    Rule: board setup constraints silk; warning
-    @(126.1650 mm, 97.8350 mm): Reference field of R1
-    @(130.2400 mm, 97.5400 mm): Segment of U2 on F.Silkscreen
+    @(123.0800 mm, 98.9700 mm): Segment of SW1 on F.Silkscreen
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
     @(124.3500 mm, 83.8800 mm): Segment of J2 on F.Silkscreen
     @(116.0950 mm, 84.1110 mm): Reference field of SW1
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(126.1650 mm, 97.8350 mm): Reference field of R1
+    @(130.2400 mm, 97.5400 mm): Segment of U2 on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(82.4685 mm, 110.7210 mm): Segment of U1 on F.Silkscreen
@@ -75,15 +66,15 @@ aab khoshik"' on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(82.4685 mm, 92.9410 mm): Segment of U1 on F.Silkscreen
+    @(98.5975 mm, 93.3760 mm): Pad 1 [unconnected-(U1-D0-Pad1)] of U1 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(82.4685 mm, 92.9410 mm): Segment of U1 on F.Silkscreen
     @(96.0575 mm, 93.3760 mm): Pad 2 [/DHT11 DATA] of U1 on F.Cu
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(82.4685 mm, 92.9410 mm): Segment of U1 on F.Silkscreen
     @(93.5175 mm, 93.3760 mm): Pad 3 [/GPIO2] of U1 on F.Cu
-[silk_over_copper]: Silkscreen clipped by solder mask
-    Local override; warning
-    @(82.4685 mm, 92.9410 mm): Segment of U1 on F.Silkscreen
-    @(98.5975 mm, 93.3760 mm): Pad 1 [unconnected-(U1-D0-Pad1)] of U1 on F.Cu
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(82.4685 mm, 92.9410 mm): Segment of U1 on F.Silkscreen
