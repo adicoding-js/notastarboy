@@ -2052,6 +2052,10 @@
 		(uuid "410b72e7-d201-40b3-896e-887b2fbfd1ea")
 	)
 	(no_connect
+		(at 68.58 50.8)
+		(uuid "4257c4f0-ab7d-4070-8fd7-a9ad37930b5d")
+	)
+	(no_connect
 		(at 72.39 50.8)
 		(uuid "47bd7b23-d820-4b04-939c-954c71665d39")
 	)
@@ -2309,16 +2313,6 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 50.8) (xy 68.58 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9f108f23-3788-43b3-a72e-1fa197f0362b")
-	)
-	(wire
-		(pts
 			(xy 43.18 67.31) (xy 45.72 67.31)
 		)
 		(stroke
@@ -2436,16 +2430,6 @@
 			(type default)
 		)
 		(uuid "e77845b1-592e-4f91-91a7-d3cbc2d5b592")
-	)
-	(wire
-		(pts
-			(xy 67.31 45.72) (xy 68.58 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0449f63-c3c5-42a2-8f54-ff2f58d28699")
 	)
 	(wire
 		(pts
@@ -2936,84 +2920,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 67.31 45.72 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5edc2b4d-73b3-4521-a088-fd35d9f9f2fe")
-		(property "Reference" "#PWR02"
-			(at 67.31 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 67.31 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 67.31 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 67.31 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 67.31 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ed386780-f7ff-40f9-9dc0-19940580f0b7")
-		)
-		(instances
-			(project "notastarboy"
-				(path "/33f2e576-0c08-4472-974b-329ca185fcb3"
-					(reference "#PWR02")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+3.3V")
 		(at 135.89 85.09 0)
 		(unit 1)
@@ -3446,6 +3352,7 @@
 		)
 		(property "Value" "GND"
 			(at 92.71 72.39 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
