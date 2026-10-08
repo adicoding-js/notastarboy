@@ -2039,6 +2039,74 @@
 			(embedded_fonts no)
 		)
 	)
+	(no_connect
+		(at 177.8 78.74)
+		(uuid "29c62a17-0634-43ea-a98b-d1e9177be19c")
+	)
+	(no_connect
+		(at 45.72 63.5)
+		(uuid "404753b7-b7f0-4722-96d1-9a8f0275861c")
+	)
+	(no_connect
+		(at 87.63 78.74)
+		(uuid "410b72e7-d201-40b3-896e-887b2fbfd1ea")
+	)
+	(no_connect
+		(at 72.39 50.8)
+		(uuid "47bd7b23-d820-4b04-939c-954c71665d39")
+	)
+	(no_connect
+		(at 177.8 86.36)
+		(uuid "4863ad01-afeb-4f4e-8b9e-e01f2236b362")
+	)
+	(no_connect
+		(at 45.72 86.36)
+		(uuid "49654207-29d4-4192-bd06-dfdbddb0b3ba")
+	)
+	(no_connect
+		(at 87.63 86.36)
+		(uuid "5d71e3a8-797c-4eed-bbc0-df975be8f59d")
+	)
+	(no_connect
+		(at 87.63 74.93)
+		(uuid "6b65247a-d6d3-41e4-b26c-7e64e13357a7")
+	)
+	(no_connect
+		(at 60.96 50.8)
+		(uuid "8f5d5bc0-e44c-4f7b-be64-6aad1a250640")
+	)
+	(no_connect
+		(at 64.77 95.25)
+		(uuid "a2b3aec2-c545-4ab2-9983-34479a7939d9")
+	)
+	(no_connect
+		(at 87.63 82.55)
+		(uuid "aa4b110a-9595-4391-9730-dd6670ae8239")
+	)
+	(no_connect
+		(at 64.77 50.8)
+		(uuid "aca4b449-465b-4dd6-8500-a1f69330d6ae")
+	)
+	(no_connect
+		(at 76.2 50.8)
+		(uuid "ad4ca2a4-99f8-4e27-9bbf-5197774ac239")
+	)
+	(no_connect
+		(at 177.8 81.28)
+		(uuid "b5dc9d6e-e5e1-4e48-8de7-da75ac6bdf83")
+	)
+	(no_connect
+		(at 177.8 83.82)
+		(uuid "c0442e68-d5e2-4878-9cbb-50afe89cfad2")
+	)
+	(no_connect
+		(at 57.15 50.8)
+		(uuid "f0052715-dd57-4297-a3c2-dbf0e14a632a")
+	)
+	(no_connect
+		(at 68.58 95.25)
+		(uuid "fcab3c20-1c32-4512-9df0-0e91fe88599d")
+	)
 	(wire
 		(pts
 			(xy 135.89 95.25) (xy 135.89 104.14)
@@ -2068,16 +2136,6 @@
 			(type default)
 		)
 		(uuid "1ae957aa-3b61-465b-bcd3-c428a32f8d3f")
-	)
-	(wire
-		(pts
-			(xy 43.1785 78.74) (xy 45.72 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1c7acb00-ea93-4d5f-9934-f2a5d02740a1")
 	)
 	(wire
 		(pts
@@ -2151,6 +2209,16 @@
 	)
 	(wire
 		(pts
+			(xy 41.91 78.74) (xy 45.72 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d8e9197-586c-4a7d-844a-8296118e1039")
+	)
+	(wire
+		(pts
 			(xy 176.53 48.26) (xy 176.53 49.53)
 		)
 		(stroke
@@ -2211,16 +2279,6 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 104.14) (xy 135.89 104.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "601df7a4-6857-456b-8140-094c371234ea")
-	)
-	(wire
-		(pts
 			(xy 43.18 71.12) (xy 45.72 71.12)
 		)
 		(stroke
@@ -2268,6 +2326,16 @@
 			(type default)
 		)
 		(uuid "a36a1c29-a448-484a-a657-333ef9404824")
+	)
+	(wire
+		(pts
+			(xy 121.92 104.14) (xy 135.89 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b06c4cef-731f-4866-9069-24d165398d84")
 	)
 	(wire
 		(pts
@@ -2389,6 +2457,16 @@
 		)
 		(uuid "f75e8774-1e56-43ff-9e4f-63013ad29f24")
 	)
+	(label "SCL"
+		(at 41.91 78.74 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "00c65746-0823-4980-8221-983cf9a2432e")
+	)
 	(label "GPIO2"
 		(at 105.41 45.72 0)
 		(effects
@@ -2399,56 +2477,6 @@
 		)
 		(uuid "039209c5-2871-4d13-b1c1-02c072e10ca5")
 	)
-	(label "SDA"
-		(at 176.53 52.07 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1abf922d-d071-452d-9135-be6a42303d0a")
-	)
-	(label "DHT11 DATA"
-		(at 132.08 72.39 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5f3142d5-f561-4359-8654-21152562b7d6")
-	)
-	(label "DHT11 DATA"
-		(at 124.46 104.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "663af0fb-b16e-4f7c-95ec-360c026a132e")
-	)
-	(label "SCL"
-		(at 43.18 78.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "75fa5710-5b31-48ed-9bcd-f917372ea422")
-	)
-	(label "SCL"
-		(at 173.99 52.07 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "884c6327-93d6-48a7-8a57-0693c338f050")
-	)
 	(label "GPIO3"
 		(at 43.18 74.93 0)
 		(effects
@@ -2457,7 +2485,57 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "acf6baec-dd64-4f06-bb3e-58e61439552f")
+		(uuid "0ddb83a1-c0da-489f-8805-5d5e76404219")
+	)
+	(label "SCL"
+		(at 173.99 49.53 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "372c4b0b-8cc6-46aa-ad68-4d266944bc41")
+	)
+	(label "DHT11_DATA"
+		(at 43.18 67.31 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7f2fd0ff-1673-49e2-b0d9-e80b6da845a5")
+	)
+	(label "SDA"
+		(at 176.53 49.53 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8a63a3d0-7c7f-4d28-b69c-7cc5e3c96483")
+	)
+	(label "DHT11 DATA"
+		(at 121.92 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "994fbe6e-ea08-4900-904a-d0d10d90e170")
+	)
+	(label "SDA"
+		(at 43.18 82.55 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9b5328e8-0da1-4cb6-be25-5e394db03b3e")
 	)
 	(label "SCL"
 		(at 179.07 73.66 0)
@@ -2469,35 +2547,25 @@
 		)
 		(uuid "b2820b22-d0f6-4f81-9913-dc7ad20837e8")
 	)
-	(label "SDA"
-		(at 43.18 82.55 0)
+	(label "SCL"
+		(at 41.91 78.74 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "b2de0e09-3b69-49bf-b837-8c9a145487a3")
+		(uuid "b859139e-a733-4213-92b7-c269875a7c6c")
 	)
 	(label "DHT11 DATA"
-		(at 43.18 67.31 0)
+		(at 134.62 72.39 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "e4d61202-b301-4e46-be0e-ed6708f5c431")
-	)
-	(label "GPIO2"
-		(at 43.18 71.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f1d1fab6-5cbd-4088-9577-5d5265ab9559")
+		(uuid "eee2a357-6792-4f24-8014-8e737b2856ee")
 	)
 	(label "SDA"
 		(at 179.07 76.2 0)
@@ -2508,6 +2576,16 @@
 			(justify left bottom)
 		)
 		(uuid "f6c35210-2815-4a0f-9059-27f0e6965aad")
+	)
+	(label "GPIO2"
+		(at 43.18 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fb7cad60-f359-4537-9f56-343df7dd8569")
 	)
 	(label "GPIO3"
 		(at 124.46 45.72 0)

@@ -382,7 +382,7 @@
 			)
 		)
 		(fp_text user "SCL"
-			(at 1.27 2.159 0)
+			(at 1.27 2.175 0)
 			(layer "F.SilkS")
 			(uuid "d2dc184c-ef18-4cbe-94ad-02028ac3b221")
 			(effects
