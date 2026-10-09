@@ -1,5 +1,12 @@
 /*
-  Starbie: a tiny motion-controlled digital pet
+  notastarboy: a tiny motion-controlled digital pet that remembers you
+
+  Based on the Starbie Week 1 guide. The hardware and the base pet are
+  unchanged. The addition here is a journal: every action you take gets
+  appended to a small log saved in flash, along with lifetime totals, so
+  the pet's history survives a reboot instead of just three raw stat
+  numbers. The MOOD view reads that journal and reacts if you've been
+  neglecting one stat for a while.
 
   This is intentionally one file. Open this .ino file in Arduino IDE, edit
   the BEGINNER SETTINGS section, and upload it to a Seeed XIAO ESP32-C3.
@@ -48,6 +55,14 @@ const int STARTING_FULLNESS = 65;
 
 // Set true, upload once, then set it back to false if you want a fresh pet.
 const bool RESET_SAVED_PET_ON_BOOT = false;
+
+// --- Journal ---------------------------------------------------------------
+// The journal remembers your last few actions and lifetime totals in flash.
+// How many recent actions to remember. Older entries just get overwritten.
+const int JOURNAL_LENGTH = 16;
+// If a stat hasn't been raised by an action in this many milliseconds, the
+// MOOD view will call it out as neglected. 6 hours by default.
+const uint32_t NEGLECT_WARNING_MS = 6UL * 60UL * 60UL * 1000UL;
 
 // --- Radial menu ----------------------------------------------------------
 // These four actions appear at TOP, RIGHT, BOTTOM, then LEFT in the menu.
@@ -190,7 +205,32 @@ enum View {
   PET_VIEW,
   MENU_VIEW,
   STATS_VIEW,
+  MOOD_VIEW,
 };
+
+// One journal entry per action taken. actionIndex matches the MENU_ITEMS
+// array (0=NAP, 1=PLAY, 2=FEED, 3=PET), and -1 means "this was a shake."
+struct JournalEntry {
+  int actionIndex;
+  uint32_t millisAgo;  // how long ago this happened, as of the last save
+};
+
+JournalEntry journal[JOURNAL_LENGTH];
+int journalCount = 0;      // how many of the entries above are actually used
+int journalNextSlot = 0;   // where the next entry gets written (wraps around)
+
+// Lifetime totals, so the pet remembers more than just the last 16 things.
+int totalFeeds = 0;
+int totalPlays = 0;
+int totalNaps = 0;
+int totalPets = 0;
+int totalShakes = 0;
+
+// When each stat was last raised, in millis(). Used by the MOOD view to
+// notice if you have been ignoring feeding, playing, etc.
+uint32_t lastFedAt = 0;
+uint32_t lastPlayedAt = 0;
+uint32_t lastPettedAt = 0;
 
 PetState pet = {STARTING_JOY, STARTING_ENERGY, STARTING_FULLNESS};
 ButtonState buttonOne = {BUTTON_ONE_PIN, HIGH, HIGH, 0};
@@ -239,12 +279,118 @@ void loadPet() {
   pet.joy = preferences.getInt("joy", STARTING_JOY);
   pet.energy = preferences.getInt("energy", STARTING_ENERGY);
   pet.fullness = preferences.getInt("full", STARTING_FULLNESS);
+
+  totalFeeds = preferences.getInt("totFeed", 0);
+  totalPlays = preferences.getInt("totPlay", 0);
+  totalNaps = preferences.getInt("totNap", 0);
+  totalPets = preferences.getInt("totPet", 0);
+  totalShakes = preferences.getInt("totShake", 0);
+
+  // The journal is stored as two raw byte blobs: one for actionIndex (signed
+  // bytes, since -1 means "shake") and one for millisAgo (how long before
+  // this boot the entry happened, in whole seconds so it fits in a uint16).
+  journalCount = preferences.getInt("jCount", 0);
+  journalNextSlot = preferences.getInt("jNext", 0);
+  int8_t actions[JOURNAL_LENGTH];
+  uint16_t agesSeconds[JOURNAL_LENGTH];
+  size_t actionsRead = preferences.getBytes("jActions", actions, sizeof(actions));
+  size_t agesRead = preferences.getBytes("jAges", agesSeconds, sizeof(agesSeconds));
+  for (int i = 0; i < JOURNAL_LENGTH; i++) {
+    const bool hadSavedEntry = i < static_cast<int>(actionsRead) &&
+                               i < static_cast<int>(agesRead / sizeof(uint16_t));
+    journal[i].actionIndex = hadSavedEntry ? actions[i] : -2;  // -2: empty slot
+    // Treat "how old was this when we saved it" as "how old it still is."
+    // Good enough for a desk pet; it does not need to track real time while off.
+    journal[i].millisAgo = hadSavedEntry
+        ? static_cast<uint32_t>(agesSeconds[i]) * 1000UL
+        : 0;
+  }
+
+  // We do not know exactly how long ago each stat was last raised across a
+  // reboot, so treat "loaded with a journal" as "recently enough," and let
+  // neglect warnings build back up naturally from here.
+  const uint32_t now = millis();
+  lastFedAt = totalFeeds > 0 ? now : 0;
+  lastPlayedAt = totalPlays > 0 ? now : 0;
+  lastPettedAt = totalPets > 0 ? now : 0;
 }
 
 void savePet() {
   preferences.putInt("joy", pet.joy);
   preferences.putInt("energy", pet.energy);
   preferences.putInt("full", pet.fullness);
+}
+
+void saveJournal() {
+  preferences.putInt("totFeed", totalFeeds);
+  preferences.putInt("totPlay", totalPlays);
+  preferences.putInt("totNap", totalNaps);
+  preferences.putInt("totPet", totalPets);
+  preferences.putInt("totShake", totalShakes);
+  preferences.putInt("jCount", journalCount);
+  preferences.putInt("jNext", journalNextSlot);
+
+  int8_t actions[JOURNAL_LENGTH];
+  uint16_t agesSeconds[JOURNAL_LENGTH];
+  const uint32_t now = millis();
+  for (int i = 0; i < JOURNAL_LENGTH; i++) {
+    actions[i] = static_cast<int8_t>(journal[i].actionIndex);
+    const uint32_t ageMs = journal[i].actionIndex == -2 ? 0 : now - journal[i].millisAgo;
+    agesSeconds[i] = static_cast<uint16_t>(ageMs / 1000UL);
+  }
+  preferences.putBytes("jActions", actions, sizeof(actions));
+  preferences.putBytes("jAges", agesSeconds, sizeof(agesSeconds));
+}
+
+// Call this every time an action happens (feed, play, nap, pet, or shake).
+// actionIndex matches MENU_ITEMS, or -1 for a shake.
+void logJournalEntry(int actionIndex) {
+  journal[journalNextSlot].actionIndex = actionIndex;
+  journal[journalNextSlot].millisAgo = millis();  // "when" this happened
+  journalNextSlot = (journalNextSlot + 1) % JOURNAL_LENGTH;
+  if (journalCount < JOURNAL_LENGTH) {
+    journalCount++;
+  }
+
+  const uint32_t now = millis();
+  if (actionIndex == -1) {
+    totalShakes++;
+  } else if (actionIndex == 2) {  // FEED
+    totalFeeds++;
+    lastFedAt = now;
+  } else if (actionIndex == 1) {  // PLAY
+    totalPlays++;
+    lastPlayedAt = now;
+  } else if (actionIndex == 0) {  // NAP
+    totalNaps++;
+  } else if (actionIndex == 3) {  // PET
+    totalPets++;
+    lastPettedAt = now;
+  }
+
+  saveJournal();
+}
+
+// Returns a short string describing what has been neglected the longest, or
+// an empty string if nothing has gone past NEGLECT_WARNING_MS yet.
+const char *mostNeglectedThing() {
+  const uint32_t now = millis();
+  const uint32_t feedAge = lastFedAt == 0 ? now : now - lastFedAt;
+  const uint32_t playAge = lastPlayedAt == 0 ? now : now - lastPlayedAt;
+  const uint32_t petAge = lastPettedAt == 0 ? now : now - lastPettedAt;
+
+  uint32_t worstAge = feedAge;
+  const char *worstLabel = "HUNGRY";
+  if (playAge > worstAge) {
+    worstAge = playAge;
+    worstLabel = "BORED";
+  }
+  if (petAge > worstAge) {
+    worstAge = petAge;
+    worstLabel = "LONELY";
+  }
+
+  return worstAge >= NEGLECT_WARNING_MS ? worstLabel : "";
 }
 
 void setUpButton(ButtonState &button) {
@@ -387,6 +533,7 @@ void checkForShake() {
     shakeAnimationEndsAt = now + 350;
     changePet(SHAKE_JOY_CHANGE, SHAKE_ENERGY_CHANGE, SHAKE_FULLNESS_CHANGE);
     savePet();
+    logJournalEntry(-1);  // -1: this was a shake, not a menu action.
   }
 }
 
@@ -408,6 +555,7 @@ void chooseMenuItem() {
   const MenuItem &item = MENU_ITEMS[selectedMenuItem];
   changePet(item.joyChange, item.energyChange, item.fullnessChange);
   savePet();
+  logJournalEntry(selectedMenuItem);
   const uint32_t now = millis();
   nappingUntil = 0;
   heartAnimationEndsAt = 0;
@@ -441,8 +589,14 @@ void handleButtons() {
   }
 
   if (wasPressed(buttonTwo)) {
-    // Button 2 never changes the pet. It only lets you peek at the values.
-    currentView = currentView == STATS_VIEW ? PET_VIEW : STATS_VIEW;
+    // Button 2 never changes the pet. It cycles PET -> STATS -> MOOD -> PET.
+    if (currentView == STATS_VIEW) {
+      currentView = MOOD_VIEW;
+    } else if (currentView == MOOD_VIEW) {
+      currentView = PET_VIEW;
+    } else {
+      currentView = STATS_VIEW;
+    }
   }
 }
 
@@ -590,11 +744,52 @@ void drawStats() {
   }
 }
 
+void drawMood() {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(4, 2);
+  display.print("JOURNAL");
+
+  display.setCursor(4, 16);
+  display.print("FED ");
+  display.print(totalFeeds);
+  display.setCursor(64, 16);
+  display.print("PLAYED ");
+  display.print(totalPlays);
+
+  display.setCursor(4, 27);
+  display.print("NAPPED ");
+  display.print(totalNaps);
+  display.setCursor(74, 27);
+  display.print("PET ");
+  display.print(totalPets);
+
+  display.setCursor(4, 38);
+  display.print("SHAKEN ");
+  display.print(totalShakes);
+  display.setCursor(4, 49);
+  display.print("LOGGED ");
+  display.print(journalCount);
+  display.print("/");
+  display.print(JOURNAL_LENGTH);
+
+  // If one stat has gone unattended past NEGLECT_WARNING_MS, say so.
+  const char *neglected = mostNeglectedThing();
+  if (neglected[0] != '\0') {
+    display.setCursor(4, 58);
+    display.print(neglected);
+  }
+}
+
 void drawCurrentView() {
   if (currentView == MENU_VIEW) {
     drawMenu();
   } else if (currentView == STATS_VIEW) {
     drawStats();
+  } else if (currentView == MOOD_VIEW) {
+    drawMood();
   } else {
     drawPet();
   }
