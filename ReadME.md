@@ -10,6 +10,8 @@ notastarboy sits on your desk, shows its personality on a small OLED, and reacts
 
 What's different from stock Starbie: every action gets logged, not just applied and forgotten. Press button 2 twice to pull up the MOOD view and see FED / PLAYED / NAPPED / PET / SHAKEN totals, how many entries are currently logged, and a one-word callout (HUNGRY / BORED / LONELY) if you've left one stat untouched for 6+ hours.
 
+<img width="1382" height="810" alt="image" src="https://github.com/user-attachments/assets/f0fc3b82-3c3e-4a11-a5cb-13b7059c559a" />
+
 
 ### Bill of materials(BOM)
 
