@@ -10,6 +10,22 @@ notastarboy sits on your desk, shows its personality on a small OLED, and reacts
 
 What's different from stock Starbie: every action gets logged, not just applied and forgotten. Press button 2 twice to pull up the MOOD view and see FED / PLAYED / NAPPED / PET / SHAKEN totals, how many entries are currently logged, and a one-word callout (HUNGRY / BORED / LONELY) if you've left one stat untouched for 6+ hours.
 
+
+### BOM?
+
+| Item | Description | Qty | Unit Price (AUD) | Line Total (AUD) | Link |
+|------|-------------|-----|------------------|------------------|------|
+| 1 | Beetle ESP32-C3 (RISC-V Core Development Board) — main microcontroller for all the processing | 1 | $8.50 | $8.50 | [Link](https://robocraze.com/products/beetle-esp32-c3-risc-v-core-development-board?_pos=1&_psq=esp32+c3&_psid=18ba7251c&_ss=e) |
+| 2 | MPU6050 — gyroscope and motion detection | 1 | $1.70 | $1.70 | [Link](https://robocraze.com/products/mpu-6050-triple-axis-accelerometer-gyroscope-module?_pos=1&_psq=MPU6050&_psid=26e4c4fb9&_ss=e) |
+| 3 | DHT11 — environment sensing | 1 | $0.70 | $0.70 | [Link](https://robocraze.com/products/dht11-humidity-and-temperature-sensor?_pos=2&_sid=9e06e5b0b&_ss=r) |
+| 4 | 0.96" OLED Display — display for showing main pet | 1 | $1.80 | $1.80 | [Link](https://robocraze.com/products/0-96in-oled-display-module-4pin?_pos=1&_psq=0.96+OLED&_psid=bfed60e23&_ss=e) |
+| 5 | Resistors — resistors for resisting current | 1 | $0.50 | $0.50 | [Link](https://robocraze.com/products/resistor-box?_pos=1&_sid=7e886e4f5&_ss=r) |
+| 6 | MX Switches — for interaction | 1 | $5.17 | $5.17 | [Link](https://www.amazon.in/Buildcon-Mechanical-Keyboard-Universal-Keyboards/dp/B0GCCQLQBV/) |
+| 7 | Keycaps — keycaps for switches | 1 | $11.00 | $11.00 | [Link](https://www.amazon.in/ZORBES-130-Key-Topographic-Mechanical-Keyboard/dp/B0GZMBPHYB/) |
+| 8 | Tax & shipping for the whole order | – | – | $0.63 | – |
+| | **Total** | | | **$30.00** | |
+
+
 ## Why?
 
 This started as the week 1 beginner tutorial for halflife. The journal is the required departure from the guide, Starbie's own maintainers ask that submissions change more than the shape, so this adds actual firmware behavior on top instead of reskinning the same build.
